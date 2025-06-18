@@ -1,0 +1,14 @@
+@FreightAPI_HostAddress = http://localhost:8080
+
+GET {{FreightAPI_HostAddress}}/todos/
+Accept: application/json
+
+###
+
+GET {{FreightAPI_HostAddress}}/todos/1
+Accept: application/json
+
+###
+
+POST {{FreightAPI_HostAddress}}/shipments
+Accept: application/json
