@@ -9,11 +9,10 @@
             "command": "cmd",
             "args": ["/c", "echo Husky.Net is awesome!" ]
          }
-      },
-      {
+      },      {
          "name": "CSharpier Format",
          "command": "dotnet",
-         "args": ["csharpier", "${staged}"],
+         "args": ["tool", "run", "csharpier", "format", "${staged}"],
          "include": ["**/*.cs"]
       },
       {

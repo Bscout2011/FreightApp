@@ -1,6 +1,12 @@
 # Remove the line below if you want to inherit .editorconfig settings from higher directories
 root = true
 
+# All files
+[*]
+end_of_line = crlf
+insert_final_newline = true
+charset = utf-8
+
 # C# files
 [*.cs]
 
@@ -242,3 +248,23 @@ dotnet_naming_style.begins_with_i.required_prefix = I
 dotnet_naming_style.begins_with_i.required_suffix = 
 dotnet_naming_style.begins_with_i.word_separator = 
 dotnet_naming_style.begins_with_i.capitalization = pascal_case
+
+# TypeScript and JavaScript files
+[*.{ts,js}]
+indent_size = 2
+end_of_line = crlf
+
+# HTML files
+[*.html]
+indent_size = 2
+end_of_line = crlf
+
+# JSON files
+[*.json]
+indent_size = 2
+end_of_line = crlf
+
+# CSS and SCSS files
+[*.{css,scss}]
+indent_size = 2
+end_of_line = crlf
