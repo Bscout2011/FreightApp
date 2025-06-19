@@ -12,6 +12,12 @@
     "lint": "ng lint"
   },
   "private": true,
+  "prettier": {
+    "singleQuote": true
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
   "dependencies": {
     "@angular/common": "^20.0.0",
     "@angular/compiler": "^20.0.0",

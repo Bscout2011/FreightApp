@@ -18,9 +18,8 @@
       },
       {
          "name": "Prettier Format UI",
-         "command": "npm",
-         "args": ["run", "format", "--", "${staged}"],
-         "include": ["Freight.UI/**/*.{ts,html,css,scss,json}"],
+         "command": "npx",
+         "args": ["lint-staged"],
          "cwd": "Freight.UI"
       },
       {
