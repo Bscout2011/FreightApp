@@ -1,0 +1,34 @@
+{
+   "$schema": "https://alirezanet.github.io/Husky.Net/schema.json",
+   "tasks": [
+      {
+         "name": "welcome-message-example",
+         "command": "bash",
+         "args": [ "-c", "echo Husky.Net is awesome!" ],
+         "windows": {
+            "command": "cmd",
+            "args": ["/c", "echo Husky.Net is awesome!" ]
+         }
+      },
+      {
+         "name": "CSharpier Format",
+         "command": "dotnet",
+         "args": ["csharpier", "${staged}"],
+         "include": ["**/*.cs"]
+      },
+      {
+         "name": "Prettier Format UI",
+         "command": "npm",
+         "args": ["run", "format", "--", "${staged}"],
+         "include": ["Freight.UI/**/*.{ts,html,css,scss,json}"],
+         "cwd": "Freight.UI"
+      },
+      {
+         "name": "ESLint Check UI",
+         "command": "npm",
+         "args": ["run", "lint"],
+         "include": ["Freight.UI/**/*.{ts,html}"],
+         "cwd": "Freight.UI"
+      }
+   ]
+}
