@@ -8,5 +8,5 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.css'
 })
 export class App {
-  protected title = 'Freight.UI';
+  protected title = 'Freight.UI'; variable = 'Freight.UI';
 }
