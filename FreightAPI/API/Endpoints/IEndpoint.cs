@@ -1,4 +1,4 @@
-﻿namespace FreightAPI.API.Endpoints;
+namespace FreightAPI.API.Endpoints;
 
 public interface IEndpoint
 {

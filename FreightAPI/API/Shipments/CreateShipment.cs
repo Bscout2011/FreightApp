@@ -1,8 +1,10 @@
-﻿using FreightAPI.API.Endpoints;
+using FreightAPI.API.Endpoints;
 using FreightAPI.Domain.Shipments;
 using Marten;
 
 namespace FreightAPI.API.Shipments;
+
+public record CreateShipmentRequest(string Origin, string Destination, DateTime ScheduledAt);
 
 public class CreateShipment : IEndpoint
 {
@@ -10,15 +12,14 @@ public class CreateShipment : IEndpoint
     {
         app.MapPost(
             "shipments",
-            async (IDocumentStore store) =>
+            async (CreateShipmentRequest request, IDocumentStore store) =>
             {
                 await using var session = store.LightweightSession();
                 var shipment = new Shipment()
                 {
-                    Id = Guid.NewGuid(),
-                    Origin = "New York",
-                    Destination = "Los Angeles",
-                    ScheduledAt = DateTime.UtcNow.AddDays(5)
+                    Origin = request.Origin,
+                    Destination = request.Destination,
+                    ScheduledAt = request.ScheduledAt,
                 };
 
                 session.Store(shipment);

@@ -12,3 +12,21 @@ Accept: application/json
 
 POST {{FreightAPI_HostAddress}}/shipments
 Accept: application/json
+Content-Type: application/json
+
+{
+  "origin": "Reno",
+  "destination": "Los Angeles",
+  "scheduledAt": "2025-06-21T13:00"
+}
+
+###
+
+POST {{FreightAPI_HostAddress}}/shipments/fetch
+Accept: application/json
+Content-Type: application/json
+
+{
+  "origin": "reno",
+  "destination": "las vegas"
+}

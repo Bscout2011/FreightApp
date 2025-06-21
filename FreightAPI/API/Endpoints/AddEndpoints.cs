@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -7,20 +7,18 @@ namespace FreightAPI.API.Endpoints;
 public static class EndpointConfiguration
 {
     /// <summary>
-    /// Register all endpoints in the specified assembly.
-    /// Source https://www.milanjovanovic.tech/blog/automatically-register-minimal-apis-in-aspnetcore
+    /// Register all endpoints implementing <see cref="IEndpoint"/> in the specified assembly.
+    /// <a href="https://www.milanjovanovic.tech/blog/automatically-register-minimal-apis-in-aspnetcore">Source</a>
     /// </summary>
-    [RequiresUnreferencedCode("")]
     public static IServiceCollection AddEndpoints(
         this IServiceCollection services,
         Assembly assembly
     )
     {
         ServiceDescriptor[] serviceDescriptors = assembly
-            .DefinedTypes.Where(
-                type =>
-                    type is { IsAbstract: false, IsInterface: false }
-                    && type.IsAssignableTo(typeof(IEndpoint))
+            .DefinedTypes.Where(type =>
+                type is { IsAbstract: false, IsInterface: false }
+                && type.IsAssignableTo(typeof(IEndpoint))
             )
             .Select(type => ServiceDescriptor.Transient(typeof(IEndpoint), type))
             .ToArray();
