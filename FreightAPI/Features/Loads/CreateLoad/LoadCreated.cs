@@ -1,30 +1,30 @@
 using FreightAPI.API.Endpoints;
-using FreightAPI.Domain.Shipments;
+using FreightAPI.Domain.Loads;
 using Marten;
 
-namespace FreightAPI.API.Shipments;
+namespace FreightAPI.Features.Loads.LoadCreated;
 
-public record CreateShipmentRequest(string Origin, string Destination, DateTime ScheduledAt);
+public record LoadCreatedRequest(string Origin, string Destination, DateTime ScheduledAt);
 
-public class CreateShipment : IEndpoint
+public class LoadCreatedEndpoint : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost(
-            "shipments",
-            async (CreateShipmentRequest request, IDocumentStore store) =>
+            "loads/create",
+            async (LoadCreatedRequest request, IDocumentStore store) =>
             {
                 await using var session = store.LightweightSession();
-                var shipment = new Shipment()
+                var load = new Load()
                 {
                     Origin = request.Origin,
                     Destination = request.Destination,
                     ScheduledAt = request.ScheduledAt,
                 };
 
-                session.Store(shipment);
+                session.Store(load);
                 await session.SaveChangesAsync();
-                return Results.Created($"/shipments/{shipment.Id}", shipment);
+                return Results.Created($"/loads/{load.Id}", load);
             }
         );
     }

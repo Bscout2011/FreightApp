@@ -1,31 +1,30 @@
 using FreightAPI.API.Endpoints;
-using FreightAPI.Domain.Shipments;
+using FreightAPI.Domain.Loads;
 using Marten;
-using Marten.Linq;
 
-namespace FreightAPI.API.Shipments;
+namespace FreightAPI.API.Loads;
 
-public class FetchShipmentsRequest
+public class QueryLoadsRequest
 {
     public string? Origin { get; set; }
     public string? Destination { get; set; }
     public DateTime? ScheduledAfter { get; set; }
     public DateTime? ScheduledBefore { get; set; }
 
-    public async Task<IReadOnlyList<Shipment>> QueryAsync(
+    public async Task<IReadOnlyList<Load>> QueryAsync(
         IQuerySession session,
         CancellationToken cancellationToken = default
     )
     {
-        IQueryable<Shipment> query = session.Query<Shipment>();
+        IQueryable<Load> query = session.Query<Load>();
         if (!string.IsNullOrEmpty(Origin))
         {
-            query = query.Where(s => s.Origin.Contains(Origin, StringComparison.OrdinalIgnoreCase));
+            query = query.Where(s => s.Origin != null && s.Origin.Contains(Origin, StringComparison.OrdinalIgnoreCase));
         }
         if (!string.IsNullOrEmpty(Destination))
         {
             query = query.Where(s =>
-                s.Destination.Contains(Destination, StringComparison.OrdinalIgnoreCase)
+                s.Destination != null && s.Destination.Contains(Destination, StringComparison.OrdinalIgnoreCase)
             );
         }
         if (ScheduledAfter.HasValue)
@@ -40,14 +39,14 @@ public class FetchShipmentsRequest
     }
 }
 
-public class FetchShipments : IEndpoint
+public class ListLoads : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost(
-            "shipments/fetch",
+            "loads/list",
             async (
-                FetchShipmentsRequest request,
+                QueryLoadsRequest request,
                 IQuerySession session,
                 CancellationToken cancellationToken = default
             ) =>

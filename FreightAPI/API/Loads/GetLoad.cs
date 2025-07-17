@@ -1,18 +1,18 @@
-﻿using FreightAPI.API.Endpoints;
-using FreightAPI.Domain.Shipments;
+using FreightAPI.API.Endpoints;
+using FreightAPI.Domain.Loads;
 using Marten;
 
-namespace FreightAPI.API.Shipments;
+namespace FreightAPI.API.Loads;
 
-public class GetShipment : IEndpoint
+public class GetLoad : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet(
-            "shipments/{id:guid}",
+            "loads/{id:guid}",
             async (Guid id, IQuerySession session) =>
             {
-                var shipment = await session.LoadAsync<Shipment>(id);
+                var shipment = await session.LoadAsync<Load>(id);
 
                 return shipment is not null ? Results.Ok(shipment) : Results.NotFound();
             }
