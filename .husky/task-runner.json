@@ -20,13 +20,6 @@
          "command": "npx",
          "args": ["lint-staged"],
          "cwd": "Freight.UI"
-      },
-      {
-         "name": "ESLint Check UI",
-         "command": "npm",
-         "args": ["run", "lint"],
-         "include": ["Freight.UI/**/*.{ts,html}"],
-         "cwd": "Freight.UI"
-      }
+      }      
    ]
 }

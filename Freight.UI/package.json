@@ -9,14 +9,15 @@
     "test": "ng test",
     "format": "prettier --write \"src/**/*.{ts,html,css,scss,json}\"",
     "format-check": "prettier --check \"src/**/*.{ts,html,css,scss,json}\"",
-    "lint": "ng lint"
+    "lint": "eslint ."
   },
   "private": true,
   "prettier": {
     "singleQuote": true
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "*.{ts,html,css,scss,json}": "prettier --write --ignore-unknown",
+    "*.{ts,html}": "eslint --fix"
   },
   "dependencies": {
     "@angular/common": "^20.0.0",
@@ -25,6 +26,7 @@
     "@angular/forms": "^20.0.0",
     "@angular/platform-browser": "^20.0.0",
     "@angular/router": "^20.0.0",
+    "@tailwindcss/postcss": "^4.1.11",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },
@@ -34,6 +36,7 @@
     "@angular/compiler-cli": "^20.0.0",
     "@types/jasmine": "~5.1.0",
     "angular-eslint": "20.1.1",
+    "autoprefixer": "^10.4.21",
     "eslint": "^9.29.0",
     "jasmine-core": "~5.7.0",
     "karma": "~6.4.0",
@@ -42,7 +45,9 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "lint-staged": "^16.1.2",
+    "postcss": "^8.5.6",
     "prettier": "^3.5.3",
+    "tailwindcss": "^4.1.11",
     "typescript": "~5.8.2",
     "typescript-eslint": "8.34.1"
   }
