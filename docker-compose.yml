@@ -1,4 +1,15 @@
 services:
+  freightui:
+    image: node:20
+    container_name: freight-ui-dev
+    working_dir: /app
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./Freight.UI:/app
+      - freightui_node_modules:/app/node_modules
+    command: "sh -c \"set -x && npm install && node_modules/.bin/ng serve --host 0.0.0.0 --poll 1000 2>&1\""
+
   freightapi:
     image: ${DOCKER_REGISTRY-}freightapi
     build:
@@ -32,3 +43,4 @@ services:
 
 volumes:
   postgres_data:
+  freightui_node_modules:
