@@ -1,8 +1,7 @@
 using Azure;
 using Azure.Core;
 using Azure.Maps.Search;
-using Azure.Maps.Search.Models;
-using FreightAPI.Domain.Locations;
+using FreightApp.Domain.Locations;
 
 namespace FreightAPI.Features.Locations;
 
@@ -24,7 +23,7 @@ public class LocationService : ILocationService
         this.logger = logger;
     }
 
-    public async Task<IEnumerable<GeoAddress>> SearchAddressesAsync(
+    public async Task<IEnumerable<Location>> SearchAddressesAsync(
         string query,
         string? country = null,
         int? limit = null,
@@ -38,8 +37,17 @@ public class LocationService : ILocationService
             logger.LogWarning("Geocoding query failed");
             return [];
         }
-        var results = geocodingResponse.Value;
 
-        return [];
+        return geocodingResponse.Value.Results.Select(r => new Location
+        {
+            Address = new Address
+            {
+                Street = r.Address.StreetNameAndNumber,
+                City = r.Address.Municipality,
+                State = r.Address.CountrySubdivision,
+                Zip = r.Address.PostalCode,
+                Country = r.Address.Country,
+            },
+        });
     }
 }

@@ -1,10 +1,10 @@
-using FreightAPI.Domain.Locations;
+using FreightApp.Domain.Locations;
 
 namespace FreightAPI.Features.Locations;
 
 public interface ILocationService
 {
-    Task<IEnumerable<GeoAddress>> SearchAddressesAsync(
+    Task<IEnumerable<Location>> SearchAddressesAsync(
         string query,
         string? country = null,
         int? limit = null,

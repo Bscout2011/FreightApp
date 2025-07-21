@@ -1,11 +1,10 @@
-namespace FreightAPI.Domain.Locations;
+namespace FreightApp.Domain.Locations;
 
 public class Address
 {
-    public required string Street { get; init; }
-    public string? Suite { get; init; }
-    public required string City { get; init; }
-    public required string State { get; init; }
-    public required string PostalCode { get; init; }
-    public string? Country { get; init; }
+    public string Street { get; set; } = string.Empty;
+    public string City { get; set; } = string.Empty;
+    public string State { get; set; } = string.Empty;
+    public string Zip { get; set; } = string.Empty;
+    public string Country { get; set; } = string.Empty;
 }

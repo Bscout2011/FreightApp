@@ -1,5 +1,5 @@
 using FreightAPI.API.Endpoints;
-using FreightAPI.Domain.Loads;
+using FreightApp.Domain.Loads;
 using Marten;
 
 namespace FreightAPI.API.Loads;

@@ -1,14 +1,21 @@
+using System.Collections.Generic;
 using FreightAPI.Domain.Locations.Facilities;
-using FreightAPI.Domain.Stops;
+using FreightApp.Domain.Equipment;
+using FreightApp.Domain.Stops;
 
-namespace FreightAPI.Domain.Loads;
+namespace FreightApp.Domain.Loads;
 
 public class Load
 {
-    public Guid Id { get; init; } = Guid.NewGuid();
-    public Itinerary? Itinerary { get; set; }
-    public string? Origin { get; set; }
-    public string? Destination { get; set; }
-    public DateTime? ScheduledAt { get; set; }
-    public LoadStatus Status { get; set; } = LoadStatus.Open;
+    public Guid Id { get; set; }
+    public Guid ShipmentId { get; set; }
+    public LoadStatus Status { get; set; }
+
+    // The full list of stops for the entire load
+    public List<Stop> Stops { get; set; } = new();
+
+    // Defines the journey between stops and the carriers assigned
+    public List<Leg> Legs { get; set; } = new();
+
+    public List<Equipment> AssignedEquipment { get; set; } = new();
 }
