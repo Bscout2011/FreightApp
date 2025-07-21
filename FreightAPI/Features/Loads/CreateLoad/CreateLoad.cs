@@ -1,4 +1,5 @@
 using FreightAPI.API.Endpoints;
+using FreightAPI.Domain.Loads;
 using FreightApp.Domain.Loads;
 using Marten;
 
@@ -16,11 +17,7 @@ public class CreateLoad : IEndpoint
                 CancellationToken cancellationToken
             ) =>
             {
-                var load = new Load
-                {
-                    ShipmentId = request.ShipmentId,
-                    Status = LoadStatus.Pending,
-                };
+                var load = new Load { ShipmentId = request.ShipmentId, Status = LoadStatus.Open };
 
                 session.Store(load);
                 await session.SaveChangesAsync(cancellationToken);

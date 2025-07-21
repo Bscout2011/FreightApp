@@ -38,15 +38,15 @@ public class LocationService : ILocationService
             return [];
         }
 
-        return geocodingResponse.Value.Results.Select(r => new Location
+        return geocodingResponse.Value.Features.Select(r => new Location
         {
             Address = new Address
             {
-                Street = r.Address.StreetNameAndNumber,
-                City = r.Address.Municipality,
-                State = r.Address.CountrySubdivision,
-                Zip = r.Address.PostalCode,
-                Country = r.Address.Country,
+                Street = string.Empty,
+                City = string.Empty,
+                State = string.Empty,
+                Zip = string.Empty,
+                Country = string.Empty,
             },
         });
     }

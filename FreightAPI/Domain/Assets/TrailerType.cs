@@ -1,4 +1,4 @@
-namespace FreightApp.Domain.Equipment;
+namespace FreightAPI.Domain.Assets;
 
 public enum TrailerType
 {

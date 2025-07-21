@@ -7,6 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddEnvironmentVariables();
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
+    });
+});
+
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
     // useful for performance, but requires that all types used in serialization
@@ -32,6 +40,8 @@ builder.Services.AddMarten(options =>
 builder.Services.AddEndpoints(typeof(Program).Assembly);
 
 var app = builder.Build();
+
+app.UseCors();
 
 app.MapEndpoints();
 app.MapGet("", () => Results.Ok("Welcome to Freight API"));

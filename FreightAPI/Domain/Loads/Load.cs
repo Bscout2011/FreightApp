@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using FreightAPI.Domain.Locations.Facilities;
-using FreightApp.Domain.Equipment;
+using FreightAPI.Domain.Assets;
+using FreightApp.Domain.Loads;
 using FreightApp.Domain.Stops;
 
-namespace FreightApp.Domain.Loads;
+namespace FreightAPI.Domain.Loads;
 
 public class Load
 {
@@ -17,5 +16,5 @@ public class Load
     // Defines the journey between stops and the carriers assigned
     public List<Leg> Legs { get; set; } = new();
 
-    public List<Equipment> AssignedEquipment { get; set; } = new();
+    public List<Equipment> AllocatedEquipment { get; set; } = [];
 }
