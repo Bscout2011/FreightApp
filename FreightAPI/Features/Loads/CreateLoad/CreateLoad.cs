@@ -1,6 +1,6 @@
 using FreightAPI.API.Endpoints;
 using FreightAPI.Domain.Loads;
-using FreightApp.Domain.Loads;
+using FreightApp.Domain.Shipments;
 using Marten;
 
 namespace FreightAPI.Features.Loads.CreateLoad;
@@ -17,7 +17,19 @@ public class CreateLoad : IEndpoint
                 CancellationToken cancellationToken
             ) =>
             {
-                var load = new Load { ShipmentId = request.ShipmentId, Status = LoadStatus.Open };
+                var shipment = new Shipment
+                {
+                    CustomerId = request.CustomerId,
+                    Status = ShipmentStatus.Booked,
+                    ReferenceNumbers = request.ReferenceNumbers,
+                    Commodities = request.Commodities,
+                };
+
+                session.Store(shipment);
+
+                var load = new Load { ShipmentId = shipment.Id, Status = LoadStatus.Open };
+
+                shipment.LoadIds.Add(load.Id);
 
                 session.Store(load);
                 await session.SaveChangesAsync(cancellationToken);
@@ -30,5 +42,7 @@ public class CreateLoad : IEndpoint
 
 public class CreateLoadRequest
 {
-    public Guid ShipmentId { get; set; }
+    public Guid CustomerId { get; set; }
+    public List<ReferenceNumber> ReferenceNumbers { get; set; } = new();
+    public List<Commodity> Commodities { get; set; } = new();
 }

@@ -1,0 +1,94 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Containers .NET Attach (Preview)",
+      "type": "docker",
+      "request": "attach",
+      "platform": "netCore",
+      "containerName": "freightapi",
+      "sourceFileMap": {
+        "/src": "${workspaceFolder}"
+      }
+    },
+    {
+      "name": "Launch FreightAPI",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/FreightAPI/bin/Debug/net8.0/FreightAPI.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/FreightAPI",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings__DefaultConnection": "Host=localhost;Database=freight;Username=myuser;Password=mypwd"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
+    },
+    {
+      "name": "Launch FreightAPI (with Docker DB)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/FreightAPI/bin/Debug/net8.0/FreightAPI.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/FreightAPI",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings__DefaultConnection": "Host=localhost;Database=freight;Username=myuser;Password=mypwd",
+        "ASPNETCORE_URLS": "http://localhost:5152"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
+    },
+    {
+      "name": "Docker Compose",
+      "type": "docker-compose",
+      "request": "launch",
+      "projectType": "netCore",
+      "dockerComposeFile": "${workspaceFolder}/docker-compose.yml",
+      "dockerComposeServiceName": "freightapi",
+      "removeBuildOptions": false
+    },
+    {
+      "name": "Attach to FreightAPI Container",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${command:pickRemoteProcess}",
+      "pipeTransport": {
+        "pipeCwd": "${workspaceFolder}",
+        "pipeProgram": "docker",
+        "pipeArgs": ["exec", "-i", "freightapp-freightapi-1"],
+        "debuggerPath": "/vsdbg/vsdbg",
+        "quoteArgs": false
+      },
+      "sourceFileMap": {
+        "/app": "${workspaceFolder}/FreightAPI"
+      }
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Launch Full Stack (API + UI)",
+      "configurations": [
+        "Launch FreightAPI (with Docker DB)",
+        "Launch Chrome against localhost"
+      ],
+      "preLaunchTask": "start-postgres",
+      "stopAll": true
+    }
+  ]
+}

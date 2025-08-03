@@ -1,0 +1,208 @@
+<div class="container mx-auto p-4">
+  <h2 class="text-2xl font-bold mb-4 text-blue-accent">Create Load</h2>
+  <form
+    [formGroup]="loadForm"
+    (ngSubmit)="onSubmit()"
+    class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+  >
+    <div class="mb-4">
+      <label
+        class="block text-gray-700 text-sm font-bold mb-2"
+        for="customerId"
+      >
+        Customer ID:
+      </label>
+      <input
+        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="customerId"
+        type="text"
+        formControlName="customerId"
+        placeholder="Enter Customer ID (GUID format)"
+      />
+      <div
+        *ngIf="loadForm.controls['customerId'].invalid && loadForm.controls['customerId'].touched"
+        class="text-red-500 text-xs italic"
+      >
+        <span *ngIf="loadForm.controls['customerId'].errors?.['required']"
+          >Customer ID is required.</span
+        >
+        <span *ngIf="loadForm.controls['customerId'].errors?.['invalidGuid']"
+          >Customer ID must be a valid GUID format (e.g.,
+          12345678-1234-1234-1234-123456789abc).</span
+        >
+      </div>
+    </div>
+
+    <h3 class="text-xl font-bold mb-2 text-blue-accent">Reference Numbers</h3>
+    <div formArrayName="referenceNumbers">
+      <div
+        *ngFor="let ref of referenceNumbers.controls; let i = index"
+        [formGroupName]="i"
+        class="mb-4 p-4 border rounded"
+      >
+        <div class="mb-2">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="refType-{{i}}"
+          >
+            Type:
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="refType-{{i}}"
+            type="text"
+            formControlName="type"
+            placeholder="e.g., PO, BOL"
+          />
+          <div
+            *ngIf="ref.get('type')?.invalid && ref.get('type')?.touched"
+            class="text-red-500 text-xs italic"
+          >
+            Type is required.
+          </div>
+        </div>
+        <div class="mb-2">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="refValue-{{i}}"
+          >
+            Value:
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="refValue-{{i}}"
+            type="text"
+            formControlName="value"
+            placeholder="Enter Value"
+          />
+          <div
+            *ngIf="ref.get('value')?.invalid && ref.get('value')?.touched"
+            class="text-red-500 text-xs italic"
+          >
+            Value is required.
+          </div>
+        </div>
+        <button
+          type="button"
+          (click)="removeReferenceNumber(i)"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+        >
+          Remove Reference Number
+        </button>
+      </div>
+    </div>
+    <button
+      type="button"
+      (click)="addReferenceNumber()"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+    >
+      Add Reference Number
+    </button>
+
+    <h3 class="text-xl font-bold mb-2 text-blue-accent">Commodities</h3>
+    <div formArrayName="commodities">
+      <div
+        *ngFor="let commodity of commodities.controls; let i = index"
+        [formGroupName]="i"
+        class="mb-4 p-4 border rounded"
+      >
+        <div class="mb-2">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="description-{{i}}"
+          >
+            Description:
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="description-{{i}}"
+            type="text"
+            formControlName="description"
+            placeholder="e.g., Widgets"
+          />
+          <div
+            *ngIf="commodity.get('description')?.invalid && commodity.get('description')?.touched"
+            class="text-red-500 text-xs italic"
+          >
+            Description is required.
+          </div>
+        </div>
+        <div class="mb-2">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="weight-{{i}}"
+          >
+            Weight:
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="weight-{{i}}"
+            type="number"
+            formControlName="weight"
+            placeholder="e.g., 10000"
+          />
+          <div
+            *ngIf="commodity.get('weight')?.invalid && commodity.get('weight')?.touched"
+            class="text-red-500 text-xs italic"
+          >
+            Weight is required and must be a positive number.
+          </div>
+        </div>
+        <div class="mb-2">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="handlingInstructions-{{i}}"
+          >
+            Handling Instructions:
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="handlingInstructions-{{i}}"
+            type="text"
+            formControlName="handlingInstructions"
+            placeholder="e.g., Fragile"
+          />
+        </div>
+        <button
+          type="button"
+          (click)="removeCommodity(i)"
+          class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline"
+        >
+          Remove Commodity
+        </button>
+      </div>
+    </div>
+    <button
+      type="button"
+      (click)="addCommodity()"
+      class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+    >
+      Add Commodity
+    </button>
+
+    <div class="mb-4 p-3 bg-blue-50 border-l-4 border-blue-400 text-blue-700">
+      <p class="text-sm">
+        <strong>💡 Tip:</strong> Use "Save Draft" to save your progress without
+        validation, or "Create Load" to submit a complete load with full
+        validation.
+      </p>
+    </div>
+
+    <div class="flex items-center justify-between">
+      <button
+        type="button"
+        (click)="onSave()"
+        class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4"
+      >
+        💾 Save Draft
+      </button>
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="submit"
+        [disabled]="!loadForm.valid"
+      >
+        ✓ Create Load
+      </button>
+    </div>
+  </form>
+</div>

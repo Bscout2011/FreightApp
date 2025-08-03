@@ -1,0 +1,22 @@
+{
+  "dotnet.defaultSolution": "FreightApp.sln",
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true,
+    "**/node_modules": true
+  },
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.enableRoslynAnalyzers": true,
+  "csharp.semanticHighlighting.enabled": true,
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "files.associations": {
+    "*.json": "jsonc"
+  },
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "angular.experimental-ivy": true,
+  "debug.terminal.clearBeforeReusing": true
+}
